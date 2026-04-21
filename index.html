@@ -36,12 +36,19 @@ document.getElementById("orderForm").addEventListener("submit", function(e){
     note: this.note.value
   };
 
-  // ✅ 用 no-cors（關鍵）
-  fetch("https://script.google.com/macros/s/AKfycbyfXHRr7u84dx1BbNeY2s7MycMtvWwcxFm2iP9tL9PukBSBoqTZ5RNQ-3ybgwbdofPe/exec", {
-    method: "POST",
-    mode: "no-cors",
-    body: JSON.stringify(data)
-  });
+ fetch("https://script.google.com/macros/s/AKfycbyfXHRr7u84dx1BbNeY2s7MycMtvWwcxFm2iP9tL9PukBSBoqTZ5RNQ-3ybgwbdofPe/exec", {
+  method: "POST",
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: new URLSearchParams({
+    account: data.account,
+    password: data.password,
+    amount: data.amount,
+    note: data.note
+  })
+});
 
   // ✅ 直接顯示成功（因為拿不到回應）
   document.getElementById("msg").innerText = "送出成功！";
