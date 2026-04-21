@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>訂餐系統</title>
+</head>
+<body>
+  <h2>訂餐系統</h2>
+
+  <form id="orderForm">
+    <label>帳號</label><br>
+    <input type="text" name="account" required><br><br>
+
+    <label>密碼</label><br>
+    <input type="text" name="password" required><br><br>
+
+    <label>金額</label><br>
+    <input type="number" name="amount" required><br><br>
+
+    <label>備註</label><br>
+    <input type="text" name="note"><br><br>
+
+    <button type="submit">送出</button>
+  </form>
+
+  <p id="msg"></p>
+
+  <script>
+    document.getElementById("orderForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const data = {
+        account: this.account.value,
+        password: this.password.value,
+        amount: this.amount.value,
+        note: this.note.value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbyxJiR8jnbBePkkh27N2-hf9TDQ9K9Yjctz4T3sbw7hYUPtjDdon3o239EZOCl9XXod/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => {
+        document.getElementById("msg").innerText = "送出成功！";
+      })
+      .catch(err => {
+        document.getElementById("msg").innerText = "送出失敗";
+      });
+    });
+  </script>
+</body>
+</html>
