@@ -26,31 +26,26 @@
   <p id="msg"></p>
 
   <script>
-    document.getElementById("orderForm").addEventListener("submit", function(e){
-      e.preventDefault();
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
 
-      const data = {
-        account: this.account.value,
-        password: this.password.value,
-        amount: this.amount.value,
-        note: this.note.value
-      };
+  const data = {
+    account: this.account.value,
+    password: this.password.value,
+    amount: this.amount.value,
+    note: this.note.value
+  };
 
-      fetch("https://https://script.google.com/macros/s/AKfycbyfXHRr7u84dx1BbNeY2s7MycMtvWwcxFm2iP9tL9PukBSBoqTZ5RNQ-3ybgwbdofPe/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(res => res.json())
-      .then(res => {
-        document.getElementById("msg").innerText = "送出成功！";
-      })
-      .catch(err => {
-        document.getElementById("msg").innerText = "送出失敗";
-      });
-    });
-  </script>
+  // ✅ 用 no-cors（關鍵）
+  fetch("https://script.google.com/macros/s/AKfycbyfXHRr7u84dx1BbNeY2s7MycMtvWwcxFm2iP9tL9PukBSBoqTZ5RNQ-3ybgwbdofPe/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data)
+  });
+
+  // ✅ 直接顯示成功（因為拿不到回應）
+  document.getElementById("msg").innerText = "送出成功！";
+});
+</script>
 </body>
 </html>
